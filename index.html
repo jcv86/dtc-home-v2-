@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DespegaTuCarrera — Entiende cómo funcionas. Ordena tu camino. Avanza con más claridad.</title>
+<meta name="description" content="DespegaTuCarrera es una plataforma de desarrollo personal con IA que te ayuda a entender tu perfil, ordenar tu foco, entrenar habilidades reales y avanzar con más criterio. La empleabilidad aparece como consecuencia visible de tu avance." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0C1830; --ink2:#13233f; --ink3:#1b2c4a;
+  --ivory:#FBF9F4; --paper:#ffffff; --paper2:#F6F3EC;
+  --text:#1A2331; --muted:#586272; --soft:#7C8696; --line:#E9E3D6; --line2:#EEEAE0;
+  --violet:#7A6CF2; --indigo:#5560E6; --cyan:#43D6E6; --sky:#7FA8FF;
+  --warm:#F07B36; --warm-d:#D9601C; --warm-soft:#FCEDE2;
+  --teal:#1E9E78;
+  --r-sm:10px; --r:16px; --r-lg:22px; --r-xl:30px;
+  --maxw:1160px;
+  --sans:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --shadow:0 18px 50px -24px rgba(12,24,48,.28);
+  --shadow-sm:0 6px 24px -14px rgba(12,24,48,.25);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--text);background:var(--ivory);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.08;letter-spacing:-.01em}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.serif{font-family:var(--serif)}
+.grad-text{background:linear-gradient(100deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo)}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:linear-gradient(120deg,var(--violet),var(--cyan))}
+.section{padding:104px 0}
+.section-tag{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--warm-d);margin-bottom:16px;display:block}
+.lead{font-size:19px;color:var(--muted);max-width:640px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);font-size:15.5px;font-weight:600;padding:15px 26px;border-radius:999px;border:1px solid transparent;cursor:pointer;transition:.25s ease;white-space:nowrap}
+.btn .ar{transition:transform .25s ease}
+.btn:hover .ar{transform:translateX(4px)}
+.btn-primary{background:linear-gradient(110deg,var(--warm),var(--warm-d));color:#fff;box-shadow:0 14px 30px -12px rgba(217,96,28,.6)}
+.btn-primary:hover{filter:brightness(1.04);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--soft);background:#fff}
+.btn-light{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.22);backdrop-filter:blur(6px)}
+.btn-light:hover{background:rgba(255,255,255,.16)}
+.btn-white{background:#fff;color:var(--ink);box-shadow:var(--shadow-sm)}
+.btn-white:hover{transform:translateY(-2px)}
+
+/* nav */
+header.nav{position:sticky;top:0;z-index:50;transition:.3s}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:74px}
+.nav.scrolled{background:rgba(251,249,244,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line2)}
+.logo{display:flex;align-items:center;gap:11px;font-weight:600;font-size:18px;letter-spacing:-.01em}
+.logo .mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--indigo),var(--violet) 45%,var(--cyan));display:grid;place-items:center;color:#fff;font-family:var(--serif);font-weight:600;font-size:18px;box-shadow:0 8px 18px -8px rgba(85,96,230,.7)}
+.logo b{font-weight:600}.logo span{color:var(--muted);font-weight:500}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:15px;color:var(--muted);font-weight:500;transition:.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.nav .btn{padding:11px 20px;font-size:14.5px}
+.burger{display:none;background:none;border:none;cursor:pointer;font-size:26px;color:var(--text)}
+.mobile-menu{display:none;flex-direction:column;gap:6px;padding:14px 24px 24px;background:var(--ivory);border-bottom:1px solid var(--line2)}
+.mobile-menu a{padding:12px 4px;font-weight:500;color:var(--text);border-bottom:1px solid var(--line2)}
+.mobile-menu .btn{margin-top:14px;justify-content:center}
+
+/* hero */
+.hero{position:relative;background:radial-gradient(1100px 620px at 78% -8%,#27407a 0%,transparent 55%),radial-gradient(900px 560px at 8% 12%,#2a2168 0%,transparent 52%),linear-gradient(170deg,#0C1830,#0a1428 60%,#0b1a36);color:#fff;overflow:hidden;padding:72px 0 96px}
+.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:54px 54px;mask-image:radial-gradient(900px 520px at 60% 18%,#000,transparent 75%);opacity:.5;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;pointer-events:none}
+.orb1{width:420px;height:420px;background:radial-gradient(circle,#5560E6,transparent 65%);top:-120px;right:6%}
+.orb2{width:360px;height:360px;background:radial-gradient(circle,#43D6E6,transparent 65%);bottom:-130px;left:-60px;opacity:.32}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:9px;padding:8px 15px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);font-size:13px;font-weight:500;color:#dfe7ff;margin-bottom:26px;backdrop-filter:blur(8px)}
+.hero-badge .pulse{width:8px;height:8px;border-radius:50%;background:#43D6E6;box-shadow:0 0 0 0 rgba(67,214,230,.7);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(67,214,230,.6)}70%{box-shadow:0 0 0 12px rgba(67,214,230,0)}100%{box-shadow:0 0 0 0 rgba(67,214,230,0)}}
+.hero h1{font-size:clamp(40px,5.2vw,62px);font-weight:500;letter-spacing:-.02em;margin-bottom:22px}
+.hero h1 .grad-text{background:linear-gradient(100deg,#9d93ff,#5ce0ee)}
+.hero .sub{font-size:19.5px;color:#cdd6e6;max-width:560px;margin-bottom:16px;line-height:1.55}
+.hero .bajada{font-size:15.5px;color:#92a0bb;max-width:540px;margin-bottom:32px;line-height:1.6}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:26px}
+.trust-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;font-size:13.5px;color:#9fadc6}
+.trust-row .ti{color:#5ce0ee;font-size:16px;vertical-align:-2px;margin-right:5px}
+.trust-row .sep{width:4px;height:4px;border-radius:50%;background:#3c4a66}
+
+/* preview card */
+.preview{position:relative}
+.pv-card{background:rgba(255,255,255,.96);border-radius:var(--r-lg);box-shadow:0 40px 80px -30px rgba(0,0,0,.55);overflow:hidden;border:1px solid rgba(255,255,255,.4)}
+.pv-top{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--line2);background:#fff}
+.pv-top .dots{display:flex;gap:6px}.pv-top .dots i{width:11px;height:11px;border-radius:50%;display:block}
+.pv-top .dots i:nth-child(1){background:#ff6058}.pv-top .dots i:nth-child(2){background:#ffbd2e}.pv-top .dots i:nth-child(3){background:#28c840}
+.pv-url{margin-left:8px;font-size:12px;color:var(--soft);font-family:var(--sans)}
+.pv-body{padding:20px;font-family:var(--sans)}
+.pv-kicker{font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--indigo);display:flex;align-items:center;gap:8px}
+.pv-kicker .ai{padding:2px 8px;border-radius:999px;background:linear-gradient(120deg,#efedff,#e3fbff);color:var(--indigo);font-size:10.5px}
+.pv-h{font-family:var(--serif);font-size:21px;font-weight:500;margin:10px 0 4px;color:var(--ink)}
+.pv-q{font-size:13px;color:var(--muted);margin-bottom:14px}
+.style-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px}
+.style-opt{display:flex;align-items:center;gap:9px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;cursor:pointer;font-size:13.5px;font-weight:500;color:var(--text);transition:.2s;background:#fff}
+.style-opt .tick{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;flex:none;transition:.2s}
+.style-opt .tick .ti{font-size:11px;color:#fff;opacity:0}
+.style-opt.on{border-color:var(--indigo);background:linear-gradient(120deg,#f4f3ff,#ecfbfe)}
+.style-opt.on .tick{background:var(--indigo);border-color:var(--indigo)}
+.style-opt.on .tick .ti{opacity:1}
+.pv-divider{height:1px;background:var(--line2);margin:16px 0}
+.pv-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.pv-row .lbl{font-size:12.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.chip{font-size:12px;font-weight:500;padding:6px 11px;border-radius:999px;background:#EEF1FF;color:#3a44b8}
+.chip.teal{background:#E2F5EF;color:#0f6e56}
+.chip.warm{background:var(--warm-soft);color:var(--warm-d)}
+.ruta{display:flex;align-items:center;gap:7px}
+.ruta .step{flex:1;height:7px;border-radius:6px;background:var(--line)}
+.ruta .step.done{background:linear-gradient(90deg,var(--indigo),var(--cyan))}
+.pv-foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--line2)}
+.pv-foot .small{font-size:11.5px;color:var(--soft)}
+.pv-next{font-size:13px;font-weight:600;color:var(--warm-d);display:inline-flex;align-items:center;gap:6px}
+.float-tag{position:absolute;background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:11px 14px;display:flex;align-items:center;gap:10px;font-family:var(--sans);z-index:3}
+.float-tag .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff;flex:none}
+.float-tag .t1{font-size:13px;font-weight:600;color:var(--ink);line-height:1.2}
+.float-tag .t2{font-size:11.5px;color:var(--muted)}
+.ft-1{top:-26px;left:-34px}
+.ft-2{bottom:-26px;right:-26px}
+
+/* generic section pieces */
+.kicker-h{font-size:clamp(28px,3.6vw,42px);font-weight:500;letter-spacing:-.015em;margin-bottom:18px;color:var(--ink);max-width:760px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.cards{display:grid;gap:20px}
+.card{background:var(--paper);border:1px solid var(--line2);border-radius:var(--r);padding:26px;transition:.3s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:transparent}
+.ic-badge{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;font-size:23px;color:#fff;margin-bottom:18px}
+.ic-violet{background:linear-gradient(135deg,#6D5CF0,#5560E6)}
+.ic-cyan{background:linear-gradient(135deg,#2FB8E6,#43D6E6)}
+.ic-warm{background:linear-gradient(135deg,#F07B36,#D9601C)}
+.ic-teal{background:linear-gradient(135deg,#1E9E78,#36C49A)}
+.card h3{font-size:20px;margin-bottom:9px;color:var(--ink)}
+.card p{font-size:15px;color:var(--muted)}
+
+/* problema */
+.problema{background:var(--paper2)}
+.pain-list{display:grid;gap:14px;margin-top:8px}
+.pain{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--line2);border-radius:var(--r);padding:20px 22px}
+.pain .ic{width:42px;height:42px;border-radius:12px;background:#FBEAE2;color:var(--warm-d);display:grid;place-items:center;font-size:20px;flex:none}
+.pain h4{font-family:var(--sans);font-size:16px;font-weight:600;margin-bottom:3px}
+.pain p{font-size:14.5px;color:var(--muted)}
+
+/* cómo funciona — etapas */
+.etapas{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.etapas::before{content:"";position:absolute;inset:0;background:radial-gradient(800px 500px at 85% 0%,rgba(85,96,230,.28),transparent 60%);pointer-events:none}
+.etapas .wrap{position:relative;z-index:2}
+.etapas .kicker-h{color:#fff}
+.etapas .lead{color:#a9b6cf}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:18px 0 46px;font-size:13.5px;color:#8b97b0}
+.flow .node{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#cdd6e6;font-weight:500}
+.flow .ti{color:#5ce0ee}
+.etapa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.etapa{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:24px;transition:.3s;position:relative}
+.etapa:hover{background:rgba(255,255,255,.09);transform:translateY(-5px)}
+.etapa .num{font-family:var(--serif);font-size:13px;color:#5ce0ee;font-weight:600;letter-spacing:.1em}
+.etapa .ic-badge{margin:14px 0 16px}
+.etapa h3{font-size:19px;color:#fff;margin-bottom:4px}
+.etapa .role{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#7f8db0;margin-bottom:10px}
+.etapa p{font-size:14px;color:#aeb9cf}
+.onboard-note{margin-top:30px;display:flex;align-items:center;gap:12px;font-size:14.5px;color:#9fadc6;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.16);border-radius:14px;padding:16px 20px}
+.onboard-note .ti{color:#5ce0ee;font-size:20px}
+
+/* beneficios */
+.benef-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px}
+.benef{padding:24px;border-radius:var(--r);background:var(--paper);border:1px solid var(--line2)}
+.benef .ti{font-size:24px;color:var(--indigo);margin-bottom:14px;display:block}
+.benef h4{font-family:var(--sans);font-size:16.5px;font-weight:600;margin-bottom:6px}
+.benef p{font-size:14px;color:var(--muted)}
+.benef.feature{background:linear-gradient(160deg,#11203c,#0d1a32);color:#fff;border:none}
+.benef.feature .ti{color:#5ce0ee}.benef.feature p{color:#aab6cd}
+
+/* diferenciadores */
+.dif{background:var(--paper2)}
+.dif-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:14px}
+.dif-box{border-radius:var(--r-lg);padding:30px}
+.dif-no{background:#fff;border:1px solid var(--line2)}
+.dif-si{background:linear-gradient(160deg,#13233f,#0d1a32);color:#fff}
+.dif-box h3{font-size:20px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.dif-no h3{color:var(--ink)}.dif-si h3{color:#fff}
+.dif-box ul{list-style:none;display:grid;gap:13px}
+.dif-box li{display:flex;gap:11px;align-items:flex-start;font-size:15px}
+.dif-no li{color:var(--muted)}.dif-si li{color:#cdd6e6}
+.dif-no li .ti{color:#c2483f;font-size:19px;flex:none}
+.dif-si li .ti{color:#5ce0ee;font-size:19px;flex:none}
+
+/* para quién */
+.aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:14px}
+.aud{border:1px solid var(--line2);border-radius:var(--r-lg);padding:32px;background:var(--paper)}
+.aud .top{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.aud .ic-badge{margin:0}
+.aud h3{font-size:21px;color:var(--ink)}
+.aud .who{font-size:13px;color:var(--soft);font-weight:500;font-family:var(--sans)}
+.aud ul{list-style:none;display:grid;gap:11px}
+.aud li{display:flex;gap:10px;font-size:14.5px;color:var(--muted)}
+.aud li .ti{color:var(--teal);font-size:18px;flex:none}
+
+/* credibilidad */
+.cred{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.cred::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 460px at 12% 100%,rgba(67,214,230,.18),transparent 60%);pointer-events:none}
+.cred .wrap{position:relative;z-index:2}
+.cred .two{align-items:center}
+.cred .kicker-h{color:#fff}
+.steps60{display:grid;gap:16px;margin-top:8px}
+.s60{display:flex;gap:16px;align-items:flex-start}
+.s60 .n{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;font-family:var(--serif);font-size:17px;color:#5ce0ee;flex:none}
+.s60 h4{font-family:var(--sans);font-size:16px;font-weight:600;color:#fff;margin-bottom:3px}
+.s60 p{font-size:14px;color:#a4b0c8}
+.mock{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-lg);padding:24px}
+.mock .mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.mock .mh .t{font-family:var(--serif);font-size:18px;color:#fff}
+.mock .badge-ai{font-size:11px;font-weight:600;padding:5px 11px;border-radius:999px;background:rgba(92,224,238,.14);color:#7fe9f4;border:1px solid rgba(92,224,238,.3)}
+.bar{margin-bottom:13px}
+.bar .bl{display:flex;justify-content:space-between;font-size:12.5px;color:#a4b0c8;margin-bottom:6px}
+.bar .track{height:8px;border-radius:6px;background:rgba(255,255,255,.08);overflow:hidden}
+.bar .fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#5560E6,#43D6E6)}
+.mock .note{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);font-size:13px;color:#9fadc6;display:flex;gap:9px;align-items:flex-start}
+.mock .note .ti{color:#5ce0ee;font-size:17px}
+.built{margin-top:26px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:#8b97b0}
+.built .pill{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#cdd6e6;font-weight:500;font-size:13px}
+
+/* CTA band */
+.ctaband{background:linear-gradient(120deg,#5560E6,#6D5CF0 45%,#2FB8E6);color:#fff;text-align:center;position:relative;overflow:hidden}
+.ctaband::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(700px 300px at 50% 40%,#000,transparent 75%);opacity:.6}
+.ctaband .wrap{position:relative;z-index:2}
+.ctaband h2{font-size:clamp(30px,4.4vw,48px);color:#fff;margin-bottom:18px;letter-spacing:-.02em}
+.ctaband p{font-size:18px;color:#e6ecff;max-width:560px;margin:0 auto 32px}
+.ctaband .hero-actions{justify-content:center}
+
+/* faq */
+.faq{background:var(--ivory)}
+.faq-wrap{max-width:820px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--line);overflow:hidden}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:24px 4px;text-align:left;font-family:var(--serif);font-size:19px;font-weight:500;color:var(--ink)}
+.faq-q .ti{font-size:22px;color:var(--indigo);transition:transform .3s;flex:none}
+.faq-item.open .faq-q .ti{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-a .inner{padding:0 4px 24px;font-size:15.5px;color:var(--muted);max-width:680px}
+
+/* footer */
+footer{background:var(--ink);color:#fff;padding:64px 0 30px}
+.foot-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.1)}
+.foot-brand .logo span{color:#8b97b0}
+.foot-brand p{margin-top:16px;font-size:14.5px;color:#9fadc6;max-width:340px}
+.foot-col h5{font-family:var(--sans);font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:#7f8db0;margin-bottom:16px;font-weight:600}
+.foot-col a{display:block;font-size:14.5px;color:#b9c4d8;margin-bottom:11px;transition:.2s}
+.foot-col a:hover{color:#fff}
+.foot-bot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding-top:24px;font-size:13px;color:#7f8db0}
+.foot-bot .tag{display:inline-flex;align-items:center;gap:8px}
+.foot-bot .tag .dot{width:7px;height:7px;border-radius:50%;background:linear-gradient(120deg,#6D5CF0,#43D6E6)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:920px){
+  .hero .wrap,.two,.cred .two{grid-template-columns:1fr;gap:40px}
+  .etapa-grid{grid-template-columns:1fr 1fr}
+  .benef-grid{grid-template-columns:1fr 1fr}
+  .preview{max-width:440px;margin:0 auto}
+  .nav-links{display:none}.nav-cta .btn-ghost{display:none}
+  .burger{display:block}
+  .dif-cols,.aud-grid{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .section{padding:72px 0}
+  .etapa-grid,.benef-grid{grid-template-columns:1fr}
+  .foot-top{grid-template-columns:1fr;gap:30px}
+  .float-tag{display:none}
+  .hero{padding:48px 0 72px}
+}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<a href="#main" class="sr-only">Saltar al contenido</a>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#main" class="logo"><span class="mark">D</span><b>Despega<span>TuCarrera</span></b></a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#problema">El problema</a>
+      <a href="#como">Cómo funciona</a>
+      <a href="#etapas">Las etapas</a>
+      <a href="#para-quien">Para quién es</a>
+      <a href="#faq">Preguntas</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#como" class="btn btn-ghost">Ver cómo funciona</a>
+      <a href="#cta" class="btn btn-primary">Comenzar mi diagnóstico <span class="ar">→</span></a>
+    </div>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false"><i class="ti ti-menu-2"></i></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#problema">El problema</a>
+    <a href="#como">Cómo funciona</a>
+    <a href="#etapas">Las etapas</a>
+    <a href="#para-quien">Para quién es</a>
+    <a href="#faq">Preguntas</a>
+    <a href="#cta" class="btn btn-primary">Quiero comenzar mi diagnóstico →</a>
+  </div>
+</header>
+
+<main id="main">
+<!-- HERO -->
+<section class="hero">
+  <div class="orb orb1"></div><div class="orb orb2"></div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="hero-badge"><span class="pulse"></span> Plataforma AI-first humana</span>
+      <h1>Entiende cómo funcionas.<br>Ordena tu camino.<br>Avanza con <span class="grad-text">más claridad</span>.</h1>
+      <p class="sub">DespegaTuCarrera es una plataforma de desarrollo personal con IA que te ayuda a entender tu perfil, ordenar tu foco, entrenar habilidades reales y avanzar con más criterio en tu vida personal y laboral.</p>
+      <p class="bajada">DTC fortalece la empleabilidad de las personas porque mejora primero su claridad, su estructura, su preparación y su capacidad de avanzar con más foco en el mundo real.</p>
+      <div class="hero-actions">
+        <a href="#cta" class="btn btn-primary">Quiero comenzar mi diagnóstico <span class="ar">→</span></a>
+        <a href="#como" class="btn btn-light"><i class="ti ti-player-play" aria-hidden="true"></i> Ver cómo funciona DTC</a>
+      </div>
+      <div class="trust-row">
+        <span><i class="ti ti-bolt" aria-hidden="true"></i> Diagnóstico en minutos</span>
+        <span class="sep"></span>
+        <span><i class="ti ti-route" aria-hidden="true"></i> Ruta inicial de 30 días</span>
+        <span class="sep"></span>
+        <span><i class="ti ti-shield-check" aria-hidden="true"></i> Sin promesas de empleo rápido</span>
+      </div>
+    </div>
+
+    <!-- product preview -->
+    <div class="preview reveal">
+      <div class="float-tag ft-1">
+        <span class="ic ic-violet"><i class="ti ti-brain" aria-hidden="true"></i></span>
+        <div><div class="t1">A1 “Despega Cerebral”</div><div class="t2">Diagnóstico interpretado</div></div>
+      </div>
+      <div class="pv-card" role="img" aria-label="Vista previa del producto DTC: selección de estilo de comunicación, fortalezas detectadas y avance de la ruta.">
+        <div class="pv-top"><div class="dots"><i></i><i></i><i></i></div><span class="pv-url">app.despegatucarrera.com</span></div>
+        <div class="pv-body">
+          <div class="pv-kicker">Tu perfil <span class="ai">IA en lectura</span></div>
+          <div class="pv-h">¿Cuál es tu estilo de comunicación?</div>
+          <div class="pv-q">Marca lo que más se parece a ti. Tu Coach IA ajusta tu ruta con esto.</div>
+          <div class="style-grid" id="styleGrid">
+            <button class="style-opt on" data-s><span class="tick"><i class="ti ti-check"></i></span> Directo y asertivo</button>
+            <button class="style-opt" data-s><span class="tick"><i class="ti ti-check"></i></span> Abierto y conversacional</button>
+            <button class="style-opt" data-s><span class="tick"><i class="ti ti-check"></i></span> Calmado y reflexivo</button>
+            <button class="style-opt on" data-s><span class="tick"><i class="ti ti-check"></i></span> Preciso y estructurado</button>
+          </div>
+          <div class="pv-divider"></div>
+          <div class="pv-row"><span class="lbl">Fortalezas detectadas</span></div>
+          <div class="chips">
+            <span class="chip teal">Pensamiento analítico</span>
+            <span class="chip teal">Constancia</span>
+            <span class="chip">Comunicación</span>
+            <span class="chip warm">Brecha: visibilidad</span>
+          </div>
+          <div class="pv-row"><span class="lbl">A2 “Tu Ruta” · misión de 30 días</span><span class="lbl" style="color:var(--indigo);font-weight:600">40%</span></div>
+          <div class="ruta"><span class="step done"></span><span class="step done"></span><span class="step"></span><span class="step"></span><span class="step"></span></div>
+          <div class="pv-foot">
+            <span class="small">Perfil Vivo · actualizado hoy</span>
+            <span class="pv-next">Siguiente: Entrevista 0 <i class="ti ti-arrow-right"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="float-tag ft-2">
+        <span class="ic ic-teal"><i class="ti ti-target-arrow" aria-hidden="true"></i></span>
+        <div><div class="t1">Empleabilidad</div><div class="t2">Como consecuencia visible</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="section problema" id="problema">
+  <div class="wrap two">
+    <div class="reveal">
+      <span class="section-tag">El problema</span>
+      <h2 class="kicker-h">El problema no es la falta de opciones. Es la falta de claridad.</h2>
+      <p class="lead">La mayoría no está estancada por pereza ni por falta de información: está saturada de consejos genéricos, tests sueltos y plataformas que parten desde la vacante, no desde la persona. Así es difícil saber por dónde empezar.</p>
+    </div>
+    <div class="pain-list reveal">
+      <div class="pain"><span class="ic"><i class="ti ti-mood-confuzed" aria-hidden="true"></i></span><div><h4>“No sé por dónde empezar.”</h4><p>Mucho ruido, ningún punto de partida claro ni un orden que se sostenga en el tiempo.</p></div></div>
+      <div class="pain"><span class="ic"><i class="ti ti-puzzle" aria-hidden="true"></i></span><div><h4>Tests y cursos que no se conectan.</h4><p>Diagnósticos que terminan en un PDF y consejos que no se traducen en una ruta concreta.</p></div></div>
+      <div class="pain"><span class="ic"><i class="ti ti-compass-off" aria-hidden="true"></i></span><div><h4>Decisiones a ciegas.</h4><p>Avanzar sin leer el entorno ni medir el progreso, repitiendo lo mismo sin saber si funciona.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUCIÓN -->
+<section class="section" id="solucion">
+  <div class="wrap">
+    <div style="text-align:center;max-width:760px;margin:0 auto 50px" class="reveal">
+      <span class="section-tag">La solución</span>
+      <h2 class="kicker-h" style="margin:0 auto 18px">DTC parte desde ti, no desde la vacante.</h2>
+      <p class="lead" style="margin:0 auto">Un sistema AI-first humano que primero te entiende, luego ordena tu avance, después te hace practicar y, finalmente, te da criterio para leer tu entorno. La IA no es un chatbot lateral: es el motor que personaliza todo el recorrido.</p>
+    </div>
+    <div class="cards reveal" style="grid-template-columns:repeat(4,1fr)">
+      <div class="card"><div class="ic-badge ic-violet"><i class="ti ti-brain" aria-hidden="true"></i></div><h3>Entiende</h3><p>Lee tus cualidades, patrones, contexto y punto de partida real.</p></div>
+      <div class="card"><div class="ic-badge ic-warm"><i class="ti ti-route" aria-hidden="true"></i></div><h3>Ordena</h3><p>Convierte ese diagnóstico en una ruta con foco y prioridades.</p></div>
+      <div class="card"><div class="ic-badge ic-teal"><i class="ti ti-barbell" aria-hidden="true"></i></div><h3>Entrena</h3><p>Practica habilidades reales con simulaciones y feedback observable.</p></div>
+      <div class="card"><div class="ic-badge ic-cyan"><i class="ti ti-radar" aria-hidden="true"></i></div><h3>Contextualiza</h3><p>Te da criterio para leer oportunidades, señales y entorno.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA / ETAPAS -->
+<section class="section etapas" id="como">
+  <div class="wrap">
+    <div style="max-width:740px" class="reveal" id="etapas">
+      <span class="section-tag" style="color:#5ce0ee">Cómo funciona</span>
+      <h2 class="kicker-h">Cuatro etapas que se preparan unas a otras.</h2>
+      <p class="lead">Diagnóstico, dirección, práctica y contexto. Ninguna etapa compite con la anterior: cada una agrega un valor distinto y abre la siguiente.</p>
+    </div>
+    <div class="flow reveal">
+      <span class="node"><i class="ti ti-messages"></i> Conozcámonos</span><i class="ti ti-arrow-right" aria-hidden="true"></i>
+      <span class="node">A1 diagnostica</span><i class="ti ti-arrow-right" aria-hidden="true"></i>
+      <span class="node">A2 organiza</span><i class="ti ti-arrow-right" aria-hidden="true"></i>
+      <span class="node">A3 entrena</span><i class="ti ti-arrow-right" aria-hidden="true"></i>
+      <span class="node">A4 amplía criterio</span>
+    </div>
+    <div class="etapa-grid reveal">
+      <div class="etapa"><div class="num">A1</div><div class="ic-badge ic-violet"><i class="ti ti-brain" aria-hidden="true"></i></div><h3>“Despega Cerebral”</h3><div class="role">Diagnóstico</div><p>Autoconocimiento, lectura de patrones y un punto de partida con su Plan Ejecutivo.</p></div>
+      <div class="etapa"><div class="num">A2</div><div class="ic-badge ic-warm"><i class="ti ti-route" aria-hidden="true"></i></div><h3>“Tu Ruta”</h3><div class="role">Dirección</div><p>Una misión inicial de 30 días, expandible a 60 y 90 según tu avance y contexto.</p></div>
+      <div class="etapa"><div class="num">A3</div><div class="ic-badge ic-teal"><i class="ti ti-barbell" aria-hidden="true"></i></div><h3>“Entrenamiento”</h3><div class="role">Práctica</div><p>Entrevistas, habilidades y simulaciones con mejora observable dentro de la plataforma.</p></div>
+      <div class="etapa"><div class="num">A4</div><div class="ic-badge ic-cyan"><i class="ti ti-radar" aria-hidden="true"></i></div><h3>“Radar Estratégico”</h3><div class="role">Contexto</div><p>Lectura del entorno, oportunidades y señales para decidir mejor informado.</p></div>
+    </div>
+    <div class="onboard-note reveal"><i class="ti ti-sparkles" aria-hidden="true"></i> <span>Antes de empezar, un onboarding que te conoce de verdad —“Conozcámonos”— para que el sistema te lea mejor antes de guiarte. No es una encuesta: es la primera señal de que DTC entiende tu contexto.</span></div>
+  </div>
+</section>
+
+<!-- BENEFICIOS -->
+<section class="section" id="beneficios">
+  <div class="wrap">
+    <div style="max-width:720px" class="reveal">
+      <span class="section-tag">Lo que te llevas</span>
+      <h2 class="kicker-h">Claridad primero. Resultados, en consecuencia.</h2>
+    </div>
+    <div class="benef-grid reveal">
+      <div class="benef"><i class="ti ti-bulb" aria-hidden="true"></i><h4>Claridad sobre ti</h4><p>Entiendes cómo funcionas: tus fortalezas, tus patrones y tus brechas entrenables.</p></div>
+      <div class="benef"><i class="ti ti-focus-2" aria-hidden="true"></i><h4>Foco y estructura</h4><p>Dejas de improvisar: tienes una ruta con prioridades claras y pasos concretos.</p></div>
+      <div class="benef"><i class="ti ti-microphone-2" aria-hidden="true"></i><h4>Preparación real</h4><p>Practicas entrevistas y habilidades hasta que mejoran de forma observable.</p></div>
+      <div class="benef"><i class="ti ti-map-2" aria-hidden="true"></i><h4>Criterio para decidir</h4><p>Lees tu entorno y tus oportunidades con más contexto y mejor información.</p></div>
+      <div class="benef"><i class="ti ti-id-badge-2" aria-hidden="true"></i><h4>Perfil Vivo</h4><p>Un perfil que evoluciona contigo: avances, habilidades entrenadas y próximos pasos.</p></div>
+      <div class="benef feature"><i class="ti ti-trending-up" aria-hidden="true"></i><h4>Empleabilidad verificable</h4><p>La empleabilidad aparece como consecuencia visible de tu avance —no como una promesa automática.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIADORES -->
+<section class="section dif" id="diferenciadores">
+  <div class="wrap">
+    <div style="max-width:720px" class="reveal">
+      <span class="section-tag">Qué hace diferente a DTC</span>
+      <h2 class="kicker-h">No es un test, ni una bolsa de empleo, ni un coach suelto.</h2>
+    </div>
+    <div class="dif-cols reveal">
+      <div class="dif-box dif-no">
+        <h3><i class="ti ti-x" style="color:#c2483f"></i> Lo que DTC no es</h3>
+        <ul>
+          <li><i class="ti ti-minus"></i> Un test de personalidad que termina en un PDF.</li>
+          <li><i class="ti ti-minus"></i> Una bolsa de empleo que solo cruza palabras clave entre tu CV y una oferta.</li>
+          <li><i class="ti ti-minus"></i> Un curso genérico igual para todos.</li>
+          <li><i class="ti ti-minus"></i> Un coach aislado o un chatbot lateral.</li>
+        </ul>
+      </div>
+      <div class="dif-box dif-si">
+        <h3><i class="ti ti-check" style="color:#5ce0ee"></i> Lo que DTC sí es</h3>
+        <ul>
+          <li><i class="ti ti-point"></i> Un sistema AI-first humano que parte desde ti, no desde la vacante.</li>
+          <li><i class="ti ti-point"></i> Una continuidad real: diagnóstico → ruta → entrenamiento → radar.</li>
+          <li><i class="ti ti-point"></i> Personalización que de verdad cambia tu recorrido y tus próximos pasos.</li>
+          <li><i class="ti ti-point"></i> Avance traducido en empleabilidad verificable y medible.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUIÉN -->
+<section class="section" id="para-quien">
+  <div class="wrap">
+    <div style="max-width:720px" class="reveal">
+      <span class="section-tag">Para quién es</span>
+      <h2 class="kicker-h">Pensado para las personas. Vendible para las instituciones.</h2>
+    </div>
+    <div class="aud-grid reveal">
+      <div class="aud">
+        <div class="top"><div class="ic-badge ic-violet"><i class="ti ti-user-heart" aria-hidden="true"></i></div><div><h3>Personas</h3><span class="who">Estudiantes, profesionales y quienes buscan reorientarse</span></div></div>
+        <ul>
+          <li><i class="ti ti-check"></i> Te sientes estancado y no sabes por dónde empezar.</li>
+          <li><i class="ti ti-check"></i> Tienes experiencia, pero quieres avanzar con más foco y criterio.</li>
+          <li><i class="ti ti-check"></i> Quieres prepararte para entrevistas y mejorar tu empleabilidad.</li>
+        </ul>
+      </div>
+      <div class="aud">
+        <div class="top"><div class="ic-badge ic-teal"><i class="ti ti-building-community" aria-hidden="true"></i></div><div><h3>Instituciones</h3><span class="who">Universidades, municipalidades, OTEC y programas de empleabilidad</span></div></div>
+        <ul>
+          <li><i class="ti ti-check"></i> Necesitas mejorar orientación, preparación e inserción laboral.</li>
+          <li><i class="ti ti-check"></i> Quieres traducir el avance de las personas en empleabilidad verificable.</li>
+          <li><i class="ti ti-check"></i> Buscas un sistema serio, con trazabilidad, no un curso genérico.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDIBILIDAD -->
+<section class="section cred" id="credibilidad">
+  <div class="wrap two">
+    <div class="reveal">
+      <span class="section-tag" style="color:#5ce0ee">Hay un sistema serio detrás</span>
+      <h2 class="kicker-h">Cómo funciona, en 60 segundos.</h2>
+      <div class="steps60">
+        <div class="s60"><span class="n">1</span><div><h4>Conózcámonos te lee</h4><p>Un onboarding humano captura tu contexto real y baja la ansiedad.</p></div></div>
+        <div class="s60"><span class="n">2</span><div><h4>A1 “Despega Cerebral” diagnostica</h4><p>Devuelve un diagnóstico interpretado con tu Plan Ejecutivo inicial.</p></div></div>
+        <div class="s60"><span class="n">3</span><div><h4>A2 “Tu Ruta” organiza</h4><p>Una misión de 30 días con foco, expandible según tu avance.</p></div></div>
+        <div class="s60"><span class="n">4</span><div><h4>A3 y A4 te llevan al mundo real</h4><p>Entrenas habilidades observables y ganas criterio para leer tu entorno.</p></div></div>
+      </div>
+      <div class="built reveal">
+        <span class="pill"><i class="ti ti-cpu" aria-hidden="true"></i> Construido AI-first</span>
+        <span class="pill"><i class="ti ti-brand-vercel" aria-hidden="true"></i> Desplegado en Vercel</span>
+        <span class="pill"><i class="ti ti-lock" aria-hidden="true"></i> Privacidad y consentimiento</span>
+      </div>
+    </div>
+    <div class="mock reveal" aria-label="Vista previa del Resultado A1 con avance de la ruta.">
+      <div class="mh"><span class="t">Resultado A1 · tu lectura inicial</span><span class="badge-ai">IA</span></div>
+      <div class="bar"><div class="bl"><span>Claridad sobre tu punto de partida</span><span>82%</span></div><div class="track"><div class="fill" style="width:82%"></div></div></div>
+      <div class="bar"><div class="bl"><span>Foco y dirección</span><span>68%</span></div><div class="track"><div class="fill" style="width:68%"></div></div></div>
+      <div class="bar"><div class="bl"><span>Preparación para entrevistas</span><span>54%</span></div><div class="track"><div class="fill" style="width:54%"></div></div></div>
+      <div class="bar"><div class="bl"><span>Lectura del entorno (Radar)</span><span>40%</span></div><div class="track"><div class="fill" style="width:40%"></div></div></div>
+      <div class="note"><i class="ti ti-info-circle" aria-hidden="true"></i> <span>Vista ilustrativa del producto. Los valores se generan a partir de tu diagnóstico, no de promesas.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="section ctaband" id="cta">
+  <div class="wrap">
+    <h2>Da el primer paso hacia tu claridad.</h2>
+    <p>Comienza con tu diagnóstico y deja que DTC ordene tu camino. Empezar toma minutos; el cambio se construye día a día.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-white" onclick="return false">Quiero comenzar mi diagnóstico <span class="ar">→</span></a>
+      <a href="#como" class="btn btn-light">Quiero empezar mi proceso</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq" id="faq">
+  <div class="wrap faq-wrap">
+    <div style="text-align:center;margin-bottom:36px" class="reveal">
+      <span class="section-tag" style="display:block;text-align:center">Preguntas frecuentes</span>
+      <h2 class="kicker-h" style="margin:0 auto">Lo que probablemente te estás preguntando.</h2>
+    </div>
+    <div class="reveal">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Esto es solo un test de personalidad?<i class="ti ti-plus"></i></button>
+        <div class="faq-a"><div class="inner">No. El diagnóstico A1 “Despega Cerebral” es el punto de partida, pero no termina ahí: se traduce en un Plan Ejecutivo y en una ruta concreta, luego en entrenamiento y, finalmente, en criterio para leer tu entorno. El test es la puerta; el sistema es el recorrido completo.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Me sirve si me siento estancado y no sé por dónde empezar?<i class="ti ti-plus"></i></button>
+        <div class="faq-a"><div class="inner">Es justamente para eso. DTC parte desde ti: ordena tu punto de partida, te muestra tus fortalezas y brechas, y construye una misión inicial de 30 días para que tengas un primer foco claro y alcanzable, expandible a medida que avanzas.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Esto está pensado solo para encontrar trabajo?<i class="ti ti-plus"></i></button>
+        <div class="faq-a"><div class="inner">No. DTC es desarrollo personal integral: claridad, estructura, práctica y criterio para tu vida personal y laboral. La empleabilidad mejora como consecuencia visible de ese avance —no prometemos empleo rápido ni garantizado.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Qué hace diferente a DTC frente a otras plataformas?<i class="ti ti-plus"></i></button>
+        <div class="faq-a"><div class="inner">DTC no parte desde la vacante ni cruza palabras clave entre tu CV y una oferta. Parte desde la persona y conecta diagnóstico, ruta, entrenamiento y radar en una sola continuidad, con la IA como motor de personalización. No es un test, una bolsa de empleo, un coach aislado ni un chatbot.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Me sirve si ya tengo experiencia laboral?<i class="ti ti-plus"></i></button>
+        <div class="faq-a"><div class="inner">Sí. Con experiencia, el valor está en el foco y el criterio: entender mejor tus patrones, ordenar tu siguiente etapa, entrenar lo que de verdad mueve la aguja y leer tu entorno para tomar mejores decisiones.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="#main" class="logo"><span class="mark">D</span><b style="color:#fff">Despega<span>TuCarrera</span></b></a>
+        <p>Plataforma AI-first humana que transforma autoconocimiento en empleabilidad verificable. Parte desde la persona, no desde la vacante.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Producto</h5>
+        <a href="#como">Cómo funciona</a>
+        <a href="#etapas">A1 “Despega Cerebral”</a>
+        <a href="#etapas">A2 “Tu Ruta”</a>
+        <a href="#etapas">A3 “Entrenamiento”</a>
+        <a href="#etapas">A4 “Radar Estratégico”</a>
+      </div>
+      <div class="foot-col">
+        <h5>DTC</h5>
+        <a href="#problema">El problema</a>
+        <a href="#para-quien">Para quién es</a>
+        <a href="#faq">Preguntas frecuentes</a>
+        <a href="#cta">Comenzar mi diagnóstico</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span class="tag"><span class="dot"></span> DespegaTuCarrera · Plataforma AI-first humana</span>
+      <span>© 2026 DespegaTuCarrera. La empleabilidad aparece como consecuencia del avance; no es una promesa automática.</span>
+    </div>
+  </div>
+</footer>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.7.0/dist/tabler-icons.min.css">
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>20)};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  var burger=document.getElementById('burger'),menu=document.getElementById('mobileMenu');
+  burger.addEventListener('click',function(){
+    var open=menu.style.display==='flex';
+    menu.style.display=open?'none':'flex';
+    burger.setAttribute('aria-expanded',String(!open));
+    burger.innerHTML=open?'<i class="ti ti-menu-2"></i>':'<i class="ti ti-x"></i>';
+  });
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.style.display='none';burger.innerHTML='<i class="ti ti-menu-2"></i>';burger.setAttribute('aria-expanded','false');});});
+
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click',function(){
+      var item=q.parentElement,a=item.querySelector('.faq-a'),open=item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(o){o.classList.remove('open');o.querySelector('.faq-a').style.maxHeight=null;o.querySelector('.faq-q').setAttribute('aria-expanded','false');});
+      if(!open){item.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';q.setAttribute('aria-expanded','true');}
+    });
+  });
+
+  var grid=document.getElementById('styleGrid');
+  if(grid){grid.querySelectorAll('[data-s]').forEach(function(b){b.addEventListener('click',function(){b.classList.toggle('on');});});}
+
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+})();
+</script>
+</body>
+</html>
